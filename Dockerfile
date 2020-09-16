@@ -14,7 +14,7 @@
 FROM centos:centos7
 LABEL maintainer="Presto community <https://prestosql.io/community.html>"
 
-ENV PRESTO_VERSION 337
+ENV PRESTO_VERSION 341
 
 ENV PRESTO_LOCATION="https://repo1.maven.org/maven2/io/prestosql/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz"
 ENV CLIENT_LOCATION="https://repo1.maven.org/maven2/io/prestosql/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar"
