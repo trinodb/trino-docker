@@ -24,28 +24,28 @@ RUN \
     dnf -q clean all && \
     rm -rf /var/cache/dnf /tmp/* /var/tmp/* && \
     # set up user
-    groupadd presto --gid 1000 && \
-    useradd presto --uid 1000 --gid 1000
+    groupadd trino --gid 1000 && \
+    useradd trino --uid 1000 --gid 1000
 
-ENV PRESTO_VERSION 347
+ENV TRINO_VERSION 369
 
-ENV PRESTO_LOCATION="https://repo1.maven.org/maven2/io/prestosql/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz"
-ENV CLIENT_LOCATION="https://repo1.maven.org/maven2/io/prestosql/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar"
+ENV TRINO_LOCATION="https://repo1.maven.org/maven2/io/trino/trino-server/${TRINO_VERSION}/trino-server-${TRINO_VERSION}.tar.gz"
+ENV CLIENT_LOCATION="https://repo1.maven.org/maven2/io/trino/trino-cli/${TRINO_VERSION}/trino-cli-${TRINO_VERSION}-executable.jar"
 
 RUN \
     set -xeu && \
     # install client
-    curl -o /usr/bin/presto ${CLIENT_LOCATION} && \
-    chmod +x /usr/bin/presto && \
+    curl -o /usr/bin/trino ${CLIENT_LOCATION} && \
+    chmod +x /usr/bin/trino && \
     # install server
-    mkdir -p /usr/lib/presto /data/presto && \
-    curl ${PRESTO_LOCATION} | tar -C /usr/lib/presto -xz --strip 1 && \
-    chown -R "presto:presto" /usr/lib/presto /data/presto
+    mkdir -p /usr/lib/trino /data/trino && \
+    curl ${TRINO_LOCATION} | tar -C /usr/lib/trino -xz --strip 1 && \
+    chown -R "trino:trino" /usr/lib/trino /data/trino
 
-COPY --chown=presto:presto bin /usr/lib/presto/bin
-COPY --chown=presto:presto default /usr/lib/presto/default
+COPY --chown=trino:trino bin /usr/lib/trino/bin
+COPY --chown=trino:trino default /usr/lib/trino/default
 
 EXPOSE 8080
-USER presto:presto
+USER trino:trino
 ENV LANG en_US.UTF-8
-CMD ["/usr/lib/presto/bin/run-presto"]
+CMD ["/usr/lib/trino/bin/run-trino"]
